@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep Stage 1 catalog data centralized and cart state session-scoped so the UI can later swap to a persistent data source without rewriting pages.

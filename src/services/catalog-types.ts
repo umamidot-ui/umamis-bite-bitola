@@ -1,0 +1,4 @@
+export type Category = { id: string; name_mk: string; name_en: string | null; slug: string; description_mk: string | null; image_url: string | null; sort_order: number };
+export type Product = { id: string; category_id: string; name_mk: string; name_en: string | null; slug: string; description_mk: string | null; ingredients_mk: string | null; price: number; image_url: string | null; bestseller: boolean; vegetarian: boolean; vegan: boolean; spicy: boolean; preparation_minutes: number | null; sort_order: number; category?: Category };
+export type ProductOption = { id: string; name_mk: string; name_en: string | null; additional_price: number; sort_order: number };
+export type ProductOptionGroup = { id: string; name_mk: string; name_en: string | null; required: boolean; min_selections: number; max_selections: number; sort_order: number; options: ProductOption[] };

@@ -1,0 +1,3 @@
+import { supabase } from "@/lib/supabase";
+import type { ProductOptionGroup } from "./catalog-types";
+export async function getProductOptions(productId:string):Promise<ProductOptionGroup[]> { const {data,error}=await supabase.from("product_option_groups").select("option_group:option_groups(id,name_mk,name_en,required,min_selections,max_selections,sort_order,options(id,name_mk,name_en,additional_price,sort_order))").eq("product_id",productId); if(error)throw error; return (data ?? []).map((row)=>row.option_group).filter(Boolean).sort((a,b)=>a.sort_order-b.sort_order).map((group)=>({...group,options:[...group.options].sort((a,b)=>a.sort_order-b.sort_order)})) as ProductOptionGroup[]; }

@@ -1,0 +1,8 @@
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { Clock3 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PageIntro } from "@/components/umami";
+import { formatPrice } from "@/lib/catalog";
+import { useCart } from "@/lib/cart";
+export const Route=createFileRoute("/checkout")({head:()=>({meta:[{title:"Заврши нарачка — UMAMI'S"},{name:"description",content:"Завршувањето на нарачката доаѓа во Stage 2."},{property:"og:title",content:"Заврши нарачка — UMAMI'S"},{property:"og:description",content:"UMAMI checkout."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:Checkout});
+function Checkout(){const{count,total}=useCart();return <><PageIntro eyebrow="STAGE 2" title="Заврши нарачка" description="Во следната фаза тука ќе изберете достава или подигнување и ќе ги внесете потребните податоци."/><div className="mx-auto max-w-2xl px-4 md:px-6"><div className="glass rounded-3xl p-6 text-center md:p-10"><span className="mx-auto grid size-14 place-items-center rounded-full bg-primary/10 text-primary"><Clock3/></span><h2 className="mt-5 font-display text-2xl font-bold">Наскоро достапно</h2><p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">Вашата кошничка е зачувана за оваа сесија. Формата за адреса, начин на достава и потврда ќе биде додадена во Stage 2.</p><div className="mx-auto mt-6 flex max-w-sm justify-between rounded-2xl bg-secondary p-4 font-semibold"><span>{count} ставки</span><span>{formatPrice(total)}</span></div><Button asChild size="lg" className="mt-6"><Link to="/cart">Назад во кошничка</Link></Button></div></div></>}
