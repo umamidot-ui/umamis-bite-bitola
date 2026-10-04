@@ -4,3 +4,4 @@
 - [x] Add product details, customizations, and temporary MKD catalog data.
 - [x] Add a session-persistent cart and Stage 2 checkout placeholder.
 - [x] Verify mobile and desktop layouts plus the core ordering journey.
+- [ ] Implement the uploaded Stage 2 database, storage, security, and catalog integration specification.
