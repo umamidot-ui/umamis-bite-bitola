@@ -1,0 +1,6 @@
+import { supabase } from "@/lib/supabase";
+import type { Product } from "./catalog-types";
+const selection="id,category_id,name_mk,name_en,slug,description_mk,ingredients_mk,price,image_url,bestseller,vegetarian,vegan,spicy,preparation_minutes,sort_order,category:categories(id,name_mk,name_en,slug,description_mk,image_url,sort_order)";
+export async function getProducts(categorySlug?: string): Promise<Product[]> { let query=supabase.from("products").select(selection).eq("available",true).order("sort_order"); if(categorySlug) query=query.eq("categories.slug",categorySlug); const {data,error}=await query; if(error) throw error; return (data ?? []).filter((item)=>!categorySlug || item.category) as unknown as Product[]; }
+export async function getProduct(idOrSlug:string): Promise<Product|null> { const {data,error}=await supabase.from("products").select(selection).eq("available",true).or(`id.eq.${idOrSlug},slug.eq.${idOrSlug}`).maybeSingle(); if(error) throw error; return data as unknown as Product|null; }
+export async function getProductsByIds(ids:string[]):Promise<Product[]> { if(!ids.length)return []; const {data,error}=await supabase.from("products").select(selection).eq("available",true).in("id",ids); if(error)throw error; return data as unknown as Product[]; }
