@@ -14,7 +14,235 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          active: boolean
+          created_at: string
+          description_mk: string | null
+          id: string
+          image_url: string | null
+          name_en: string | null
+          name_mk: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description_mk?: string | null
+          id?: string
+          image_url?: string | null
+          name_en?: string | null
+          name_mk: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description_mk?: string | null
+          id?: string
+          image_url?: string | null
+          name_en?: string | null
+          name_mk?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      option_groups: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          max_selections: number
+          min_selections: number
+          name_en: string | null
+          name_mk: string
+          required: boolean
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          max_selections?: number
+          min_selections?: number
+          name_en?: string | null
+          name_mk: string
+          required?: boolean
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          max_selections?: number
+          min_selections?: number
+          name_en?: string | null
+          name_mk?: string
+          required?: boolean
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      options: {
+        Row: {
+          additional_price: number
+          available: boolean
+          created_at: string
+          id: string
+          name_en: string | null
+          name_mk: string
+          option_group_id: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          additional_price?: number
+          available?: boolean
+          created_at?: string
+          id?: string
+          name_en?: string | null
+          name_mk: string
+          option_group_id: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          additional_price?: number
+          available?: boolean
+          created_at?: string
+          id?: string
+          name_en?: string | null
+          name_mk?: string
+          option_group_id?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "options_option_group_id_fkey"
+            columns: ["option_group_id"]
+            isOneToOne: false
+            referencedRelation: "option_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_option_groups: {
+        Row: {
+          option_group_id: string
+          product_id: string
+        }
+        Insert: {
+          option_group_id: string
+          product_id: string
+        }
+        Update: {
+          option_group_id?: string
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_option_groups_option_group_id_fkey"
+            columns: ["option_group_id"]
+            isOneToOne: false
+            referencedRelation: "option_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_option_groups_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          available: boolean
+          bestseller: boolean
+          category_id: string
+          created_at: string
+          description_en: string | null
+          description_mk: string | null
+          id: string
+          image_url: string | null
+          ingredients_en: string | null
+          ingredients_mk: string | null
+          name_en: string | null
+          name_mk: string
+          preparation_minutes: number | null
+          price: number
+          slug: string
+          sort_order: number
+          spicy: boolean
+          updated_at: string
+          vegan: boolean
+          vegetarian: boolean
+        }
+        Insert: {
+          available?: boolean
+          bestseller?: boolean
+          category_id: string
+          created_at?: string
+          description_en?: string | null
+          description_mk?: string | null
+          id?: string
+          image_url?: string | null
+          ingredients_en?: string | null
+          ingredients_mk?: string | null
+          name_en?: string | null
+          name_mk: string
+          preparation_minutes?: number | null
+          price: number
+          slug: string
+          sort_order?: number
+          spicy?: boolean
+          updated_at?: string
+          vegan?: boolean
+          vegetarian?: boolean
+        }
+        Update: {
+          available?: boolean
+          bestseller?: boolean
+          category_id?: string
+          created_at?: string
+          description_en?: string | null
+          description_mk?: string | null
+          id?: string
+          image_url?: string | null
+          ingredients_en?: string | null
+          ingredients_mk?: string | null
+          name_en?: string | null
+          name_mk?: string
+          preparation_minutes?: number | null
+          price?: number
+          slug?: string
+          sort_order?: number
+          spicy?: boolean
+          updated_at?: string
+          vegan?: boolean
+          vegetarian?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
