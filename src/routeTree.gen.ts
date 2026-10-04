@@ -10,33 +10,149 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as MenuRouteImport } from './routes/menu'
+import { Route as MenuBowlsRouteImport } from './routes/menu.bowls'
+import { Route as MenuBurritosRouteImport } from './routes/menu.burritos'
+import { Route as MenuQuesadillasRouteImport } from './routes/menu.quesadillas'
+import { Route as MenuSaladsRouteImport } from './routes/menu.salads'
+import { Route as MenuSushiRouteImport } from './routes/menu.sushi'
+import { Route as ProductIdRouteImport } from './routes/product.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuRoute = MenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuBowlsRoute = MenuBowlsRouteImport.update({
+  id: '/bowls',
+  path: '/bowls',
+  getParentRoute: () => MenuRoute,
+} as any)
+const MenuBurritosRoute = MenuBurritosRouteImport.update({
+  id: '/burritos',
+  path: '/burritos',
+  getParentRoute: () => MenuRoute,
+} as any)
+const MenuQuesadillasRoute = MenuQuesadillasRouteImport.update({
+  id: '/quesadillas',
+  path: '/quesadillas',
+  getParentRoute: () => MenuRoute,
+} as any)
+const MenuSaladsRoute = MenuSaladsRouteImport.update({
+  id: '/salads',
+  path: '/salads',
+  getParentRoute: () => MenuRoute,
+} as any)
+const MenuSushiRoute = MenuSushiRouteImport.update({
+  id: '/sushi',
+  path: '/sushi',
+  getParentRoute: () => MenuRoute,
+} as any)
+const ProductIdRoute = ProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/menu': typeof MenuRouteWithChildren
+  '/menu/bowls': typeof MenuBowlsRoute
+  '/menu/burritos': typeof MenuBurritosRoute
+  '/menu/quesadillas': typeof MenuQuesadillasRoute
+  '/menu/salads': typeof MenuSaladsRoute
+  '/menu/sushi': typeof MenuSushiRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/menu': typeof MenuRouteWithChildren
+  '/menu/bowls': typeof MenuBowlsRoute
+  '/menu/burritos': typeof MenuBurritosRoute
+  '/menu/quesadillas': typeof MenuQuesadillasRoute
+  '/menu/salads': typeof MenuSaladsRoute
+  '/menu/sushi': typeof MenuSushiRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/menu': typeof MenuRouteWithChildren
+  '/menu/bowls': typeof MenuBowlsRoute
+  '/menu/burritos': typeof MenuBurritosRoute
+  '/menu/quesadillas': typeof MenuQuesadillasRoute
+  '/menu/salads': typeof MenuSaladsRoute
+  '/menu/sushi': typeof MenuSushiRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/cart'
+    | '/checkout'
+    | '/menu'
+    | '/menu/bowls'
+    | '/menu/burritos'
+    | '/menu/quesadillas'
+    | '/menu/salads'
+    | '/menu/sushi'
+    | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/cart'
+    | '/checkout'
+    | '/menu'
+    | '/menu/bowls'
+    | '/menu/burritos'
+    | '/menu/quesadillas'
+    | '/menu/salads'
+    | '/menu/sushi'
+    | '/product/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/cart'
+    | '/checkout'
+    | '/menu'
+    | '/menu/bowls'
+    | '/menu/burritos'
+    | '/menu/quesadillas'
+    | '/menu/salads'
+    | '/menu/sushi'
+    | '/product/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRoute
+  MenuRoute: typeof MenuRouteWithChildren
+  ProductIdRoute: typeof ProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +164,96 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu': {
+      id: '/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu/bowls': {
+      id: '/menu/bowls'
+      path: '/bowls'
+      fullPath: '/menu/bowls'
+      preLoaderRoute: typeof MenuBowlsRouteImport
+      parentRoute: typeof MenuRoute
+    }
+    '/menu/burritos': {
+      id: '/menu/burritos'
+      path: '/burritos'
+      fullPath: '/menu/burritos'
+      preLoaderRoute: typeof MenuBurritosRouteImport
+      parentRoute: typeof MenuRoute
+    }
+    '/menu/quesadillas': {
+      id: '/menu/quesadillas'
+      path: '/quesadillas'
+      fullPath: '/menu/quesadillas'
+      preLoaderRoute: typeof MenuQuesadillasRouteImport
+      parentRoute: typeof MenuRoute
+    }
+    '/menu/salads': {
+      id: '/menu/salads'
+      path: '/salads'
+      fullPath: '/menu/salads'
+      preLoaderRoute: typeof MenuSaladsRouteImport
+      parentRoute: typeof MenuRoute
+    }
+    '/menu/sushi': {
+      id: '/menu/sushi'
+      path: '/sushi'
+      fullPath: '/menu/sushi'
+      preLoaderRoute: typeof MenuSushiRouteImport
+      parentRoute: typeof MenuRoute
+    }
+    '/product/$id': {
+      id: '/product/$id'
+      path: '/product/$id'
+      fullPath: '/product/$id'
+      preLoaderRoute: typeof ProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface MenuRouteChildren {
+  MenuBowlsRoute: typeof MenuBowlsRoute
+  MenuBurritosRoute: typeof MenuBurritosRoute
+  MenuQuesadillasRoute: typeof MenuQuesadillasRoute
+  MenuSaladsRoute: typeof MenuSaladsRoute
+  MenuSushiRoute: typeof MenuSushiRoute
+}
+
+const MenuRouteChildren: MenuRouteChildren = {
+  MenuBowlsRoute: MenuBowlsRoute,
+  MenuBurritosRoute: MenuBurritosRoute,
+  MenuQuesadillasRoute: MenuQuesadillasRoute,
+  MenuSaladsRoute: MenuSaladsRoute,
+  MenuSushiRoute: MenuSushiRoute,
+}
+
+const MenuRouteWithChildren = MenuRoute._addFileChildren(MenuRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRoute,
+  MenuRoute: MenuRouteWithChildren,
+  ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
