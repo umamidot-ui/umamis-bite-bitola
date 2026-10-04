@@ -2,8 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { Check, ChevronRight, Leaf, Menu, Minus, Phone, Plus, ShoppingBag, Trash2, X, Zap } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { formatPrice, type Product } from "@/lib/catalog";
+import { addOns, formatPrice, type Product } from "@/lib/catalog";
 import { useCart, type CartLine } from "@/lib/cart";
 
 export function FoodImage({ src, position, alt, className, eager = false }: { src: string; position: string; alt: string; className?: string; eager?: boolean }) {
@@ -31,6 +32,10 @@ export function PageIntro({ eyebrow = "UMAMI'S МЕНИ", title, description }: 
 export function MenuGrid({ items }: { items: Product[] }) { return <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{items.map((item) => <ProductCard key={item.id} product={item} />)}</div>; }
 
 export function QuantityControl({ value, onChange }: { value: number; onChange: (value: number) => void }) { return <div className="glass-soft grid grid-cols-[40px_44px_40px] items-center rounded-full p-1"><Button variant="ghost" size="icon" className="rounded-full" onClick={() => onChange(Math.max(1, value - 1))} aria-label="Намали"><Minus /></Button><span className="text-center font-bold tabular-nums">{value}</span><Button variant="ghost" size="icon" className="rounded-full" onClick={() => onChange(value + 1)} aria-label="Зголеми"><Plus /></Button></div>; }
+
+export function ProductCustomization({ selected, onChange }: { selected: string[]; onChange: (selected: string[]) => void }) { return <div><h2 className="font-display text-lg font-bold">Избери додатоци</h2><div className="mt-3 space-y-2">{addOns.map((addOn) => <label key={addOn.id} className="glass-soft flex cursor-pointer items-center gap-3 rounded-xl p-3"><input type="checkbox" className="sr-only" checked={selected.includes(addOn.id)} onChange={() => onChange(selected.includes(addOn.id) ? selected.filter((id) => id !== addOn.id) : [...selected, addOn.id])}/><span className={cn("grid size-5 place-items-center rounded-md border", selected.includes(addOn.id) ? "bg-primary text-primary-foreground" : "bg-card")}>{selected.includes(addOn.id) && <Check className="size-3"/>}</span><span className="flex-1 text-sm font-semibold">{addOn.label}</span><span className="text-sm text-muted-foreground">+{formatPrice(addOn.price)}</span></label>)}</div></div>; }
+
+export function Modal({ open, onOpenChange, title, description, children }: { open: boolean; onOpenChange: (open: boolean) => void; title: string; description?: string; children: ReactNode }) { return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent className="glass rounded-3xl"><DialogHeader><DialogTitle className="font-display">{title}</DialogTitle>{description && <DialogDescription>{description}</DialogDescription>}</DialogHeader>{children}</DialogContent></Dialog>; }
 
 export function CartItem({ line }: { line: CartLine }) { const { updateQuantity, removeItem } = useCart(); const unit = line.product.price + line.addOns.reduce((sum, addOn) => sum + addOn.price, 0); return <article className="glass grid grid-cols-[88px_minmax(0,1fr)] gap-3 rounded-2xl p-3 sm:grid-cols-[112px_minmax(0,1fr)_auto]"><div className="aspect-square overflow-hidden rounded-xl"><FoodImage src={line.product.image} position={line.product.imagePosition} alt={line.product.name} /></div><div className="min-w-0"><h3 className="font-display font-semibold leading-tight">{line.product.name}</h3><p className="mt-1 text-xs text-muted-foreground">{line.addOns.length ? line.addOns.map((a) => a.label).join(", ") : "Без додатоци"}</p><p className="mt-2 font-bold">{formatPrice(unit * line.quantity)}</p><button onClick={() => removeItem(line.key)} className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-destructive"><Trash2 className="size-3.5" />Отстрани</button></div><div className="col-span-2 sm:col-span-1"><QuantityControl value={line.quantity} onChange={(value) => updateQuantity(line.key, value)} /></div></article>; }
 
