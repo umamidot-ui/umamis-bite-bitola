@@ -1,24 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
+import hero from "@/assets/umami-hero.jpg";
+import { Button } from "@/components/ui/button";
+import { Benefit, CategoryCard, FoodImage, ProductCard, benefitIcons } from "@/components/umami";
+import { categories, products } from "@/lib/catalog";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({ meta: [{ title: "UMAMI'S SUSHI & BURRITO — Битола" }, { name: "description", content: "Свежа јапонско-мексиканска фузија, суши, бурито и bowls во Битола." }, { property: "og:title", content: "UMAMI'S SUSHI & BURRITO — Битола" }, { property: "og:description", content: "Свежа јапонско-мексиканска фузија, суши, бурито и bowls во Битола." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }), component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+function HomePage() { return <>
+  <section className="mx-auto max-w-7xl px-4 pt-4 md:px-6"><div className="glass relative min-h-[570px] overflow-hidden rounded-[26px] md:min-h-[620px]"><FoodImage src={hero} position="center" alt="UMAMI суши и бурито" eager className="absolute inset-0" /><div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent"/><div className="absolute inset-x-0 bottom-0 p-5 text-primary-foreground md:max-w-3xl md:p-12"><p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-foreground/80">Japanese + Mexican Fusion</p><h1 className="font-display text-[42px] font-bold leading-[0.92] md:text-7xl">UMAMI'S<br/><span className="text-[30px] font-medium md:text-5xl">Sushi &amp; Burrito</span></h1><p className="mt-4 max-w-lg text-sm text-primary-foreground/80 md:text-base">Свежи вкусови, подготвени по нарачка во срцето на Битола.</p><Button asChild variant="hero" size="lg" className="mt-5 w-full sm:w-auto"><Link to="/menu">НАРАЧАЈ СЕГА <ArrowRight /></Link></Button></div></div></section>
+  <section className="mx-auto max-w-7xl px-4 pt-10 md:px-6"><div className="mb-4 flex items-end justify-between"><h2 className="font-display text-2xl font-bold">Категории</h2><Link to="/menu" className="text-sm font-bold text-primary">Сите <ArrowRight className="inline size-4"/></Link></div><div className="flex snap-x gap-3 overflow-x-auto pb-3 md:grid md:grid-cols-5">{categories.map((category) => <CategoryCard key={category.slug} category={category}/>)}</div></section>
+  <section className="mx-auto max-w-7xl px-4 pt-10 md:px-6"><div className="mb-4 flex items-end justify-between"><h2 className="font-display text-2xl font-bold">Популарно</h2><span className="text-xs text-muted-foreground">Најнарачано</span></div><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{products.map((product) => <ProductCard key={product.id} product={product}/>)}</div></section>
+  <section id="about" className="mx-auto max-w-7xl px-4 pt-14 md:px-6"><h2 className="mb-4 font-display text-2xl font-bold">Зошто Umami</h2><div className="grid grid-cols-2 gap-3 lg:grid-cols-4"><Benefit icon={benefitIcons.fresh} title="Свежи состојки" body="Секој ден внимателно одбрани"/><Benefit icon={benefitIcons.fast} title="Брза подготовка" body="Подготвено по нарачка"/><Benefit icon={benefitIcons.pickup} title="Подигнување" body="Нарачај и подигни без чекање"/><Benefit icon={benefitIcons.delivery} title="Достава" body="До твојата адреса во Битола"/></div></section>
+  </>; }
